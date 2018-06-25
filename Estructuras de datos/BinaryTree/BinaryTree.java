@@ -6,27 +6,27 @@
  * @version 0.0.1
  */
 
-public class ArbolB {
+public class BinaryTree {
     int x;
     boolean empty;
-    ArbolB iz;
-    ArbolB dr;
+    BinaryTree iz;
+    BinaryTree dr;
 
     /**
-     * Constructors for objects of class ArbolB
+     * Constructors for objects of class BinaryTree
      */
-    public ArbolB() {
+    public BinaryTree() {
         empty = true;
         iz = dr = null;
     }
 
-    public ArbolB(int v) {
+    public BinaryTree(int v) {
         x = v;
         empty = false;
         iz = dr = null;
     }
 
-    public ArbolB(ArbolB t) {
+    public BinaryTree(BinaryTree t) {
         x = t.x;
         empty = t.empty;
         iz = t.iz;
@@ -43,14 +43,14 @@ public class ArbolB {
         } else {
             if (v < x) {
                 if (iz == null) {
-                    iz = new ArbolB(v);
+                    iz = new BinaryTree(v);
                 } else {
                     iz.add(v);
                 }
             }
             if (v > x) {
                 if (dr == null) {
-                    dr = new ArbolB(v);
+                    dr = new BinaryTree(v);
                 } else {
                     dr.add(v);
                 }
@@ -89,7 +89,7 @@ public class ArbolB {
      * Returns a tree starting in the searched for number. Returns null if the
      * number is not on the tree.
      */
-    public ArbolB search(int v) {
+    public BinaryTree search(int v) {
         if (this != null) {
             if (v == x) {
                 return this;
@@ -283,7 +283,6 @@ public class ArbolB {
     */
     public void erase2(int v) {
         // Search for the subtree with the element.
-        // this.search(v);
         if (this != null) {
             if (x != v) {
                 this.search(v).erase2(v);
@@ -347,8 +346,8 @@ public class ArbolB {
     /**
      * Erase efficient.
      */
-    public ArbolB erase(int v) {
-        ArbolB t = new ArbolB(this);
+    public BinaryTree erase(int v) {
+        BinaryTree t = new BinaryTree(this);
         if (t.x == v) {
             if (t.isLeaf()) {
                 return null;
@@ -394,7 +393,7 @@ public class ArbolB {
      */
     public static void main(String[] args) {
         // Creates tree and adds values.
-        ArbolB ar = new ArbolB();
+        BinaryTree ar = new BinaryTree();
         ar.add(50);
         ar.add(40);
         ar.add(60);
@@ -413,7 +412,7 @@ public class ArbolB {
         // ar.add(54);
         // ar.add(52);
         // ar.add(53);
-        // ar.add(51);
+        ar.add(51);
         // Shows the tree integers.
         System.out.println("IPD: " + ar.getIPD());
         System.out.println("PID: " + ar.getPID());
@@ -440,8 +439,9 @@ public class ArbolB {
         // ar.erase(valor);
         // ar.cleanUp();
         System.out.println("El arbol luego de borrar el " + valor);
-        ArbolB ar2;
-        long startTime = System.nanoTime();
+        BinaryTree ar2;
+        long startTime;
+        startTime = System.nanoTime();
         ar2 = ar.erase(valor);
         long time = System.nanoTime() - startTime;
         System.out.println("Tiempo para borrar eficiente: " + time / 1000000.0 + " milisegundos.");
