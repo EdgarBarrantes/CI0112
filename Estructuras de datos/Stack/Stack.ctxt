@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.target=Stack
+comment0.text=\n\ Stack\n\n\ @author\ Edgar\ B\n\ @version\ 1.0.0\n
+comment1.params=
+comment1.target=Stack()
+comment1.text=\n\ Constructors\ for\ objects\ of\ class\ Stack\n
+comment2.params=st
+comment2.target=Stack(Stack)
+comment3.params=v
+comment3.target=void\ add(int)
+comment3.text=\n\ Add\ a\ number.\n
+comment4.params=
+comment4.target=int\ top()
+comment4.text=\n\ Returns\ the\ first\ number.\n
+comment5.params=
+comment5.target=int\ pop()
+comment5.text=\n\ Returns\ the\ first\ number\ and\ erases\ it.\n
+comment6.params=args
+comment6.target=void\ main(java.lang.String[])
+numComments=7

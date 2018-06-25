@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=ConjuntosView
+comment0.text=\n\ View\ class.\n\n\ @author\ Edgar\ Barrantes\n\ @version\ 0.0.1\n
+comment1.params=
+comment1.target=ConjuntosView()
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ view\n
+comment2.params=
+comment2.target=java.lang.String\ readString()
+comment2.text=\n\ A\ method\ to\ read\ strings.\n
+comment3.params=string
+comment3.target=void\ printString(java.lang.String)
+comment3.text=\n\ A\ method\ to\ print\ strings.\n
+comment4.params=array
+comment4.target=void\ printArray(java.util.ArrayList)
+comment4.text=\n\ Prints\ arrays.\n
+numComments=5
