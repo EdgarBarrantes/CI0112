@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.target=NodoLista
+comment1.params=v
+comment1.target=NodoLista(int)
+comment1.text=\n\ Constructor\ con\ valor.\n
+comment2.params=
+comment2.target=NodoLista()
+comment2.text=\n\ Constructor\ sin\ valor.\n
+comment3.params=
+comment3.target=int\ getSize()
+comment3.text=\n\ Devuelve\ la\ cantidad\ de\ nodos\ en\ la\ lista.\ Respuesta\ a\ la\ pregunta\ A2.\n
+comment4.params=v
+comment4.target=boolean\ searchValue(int)
+comment4.text=\n\ Busca\ una\ valor\ en\ el\ conjunto.\ Respuesta\ a\ la\ pregunta\ A2.\n
+comment5.params=
+comment5.target=java.lang.String\ getAllVal()
+comment5.text=\n\ Devuelve\ un\ string\ con\ todos\ los\ valores\ del\ conjunto.\n
+numComments=6
