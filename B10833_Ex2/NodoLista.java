@@ -1,5 +1,7 @@
+/**
+ * Clase NodoLista para uso de la clase Conjunto.
+ */
 public class NodoLista {
-  // Variables del Nodo de la lista.
   int x;
   boolean empty;
   NodoLista next;
@@ -22,7 +24,8 @@ public class NodoLista {
   }
 
   /**
-   * Devuelve la cantidad de nodos en la lista. Respuesta a la pregunta A2.
+   * Devuelve la cantidad de nodos en la lista. 
+   * Respuesta a la pregunta A2.
    */
   public int getSize() {
     int index = 1;
@@ -39,7 +42,8 @@ public class NodoLista {
   }
 
   /**
-   * Busca una valor en el conjunto. Respuesta a la pregunta A2.
+   * Busca un valor en el conjunto. 
+   * Respuesta a la pregunta A3.
    */
   public boolean searchValue(int v) {
     NodoLista iter = this;
@@ -54,6 +58,7 @@ public class NodoLista {
 
   /**
    * Devuelve un string con todos los valores del conjunto.
+   * Esto es para prueba.
    */
   public String getAllVal() {
     String t = "";

@@ -52,7 +52,8 @@ public class Conjunto {
     }
 
     /**
-     * Devuelve la cantidad de valores en la lista. Respuesta a la pregunta A2.
+     * Devuelve la cantidad de valores en la lista. 
+     * Respuesta a la pregunta A2.
      */
     public int size() {
         return cabeza.getSize();
@@ -85,10 +86,10 @@ public class Conjunto {
             conjuntoFinal.add(iter.x);
         }
         while (iter.next != null) {
+            iter = iter.next;
             if (conjuntoAComparar.exists(iter.x)) {
                 conjuntoFinal.add(iter.x);
             }
-            iter = iter.next;
         }
         return conjuntoFinal;
     }
@@ -98,18 +99,33 @@ public class Conjunto {
         a.add(3);
         a.add(1);
         a.add(7);
+        // Se trata de añadir un número que ya está en la lista, esto no funciona, como es pedido.
         a.add(3);
         a.add(11);
         a.add(77);
-        System.out.println(a.size());
-        System.out.println(a.exists(7));
-        System.out.println(a.exists(10));
         Conjunto b = new Conjunto();
         b.add(3);
+        b.add(88);
+        b.add(11);
+        b.add(1);
+        b.add(77);
+        b.add(24);
         b.add(8);
-        b.add(10);
+        b.add(23);
+        System.out.println("Conjunto A:");
         System.out.println(a.getValues());
+        System.out.println("Conjunto B:");
         System.out.println(b.getValues());
-        System.out.println("La intersección es: " + a.interseccion(b).getValues());
+        System.out.println("Tamaño del conjunto A:");
+        System.out.println(a.size());
+        System.out.println("Tamaño del conjunto B:");
+        System.out.println(b.size());
+        int alpha = 7;
+        System.out.println("Booleano que indica si " + alpha + " está en el conjunto A:");
+        System.out.println(a.exists(alpha));
+        alpha = 10;
+        System.out.println("Booleano que indica si " + alpha + " está en el conjunto A:");
+        System.out.println(a.exists(alpha));
+        System.out.println("La intersección de los conjuntos A y B es: " + a.interseccion(b).getValues());
     }
 }
