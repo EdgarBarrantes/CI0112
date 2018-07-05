@@ -16,19 +16,19 @@ public class FamTree {
      */
     public FamTree(Person person) {
         this.person = person;
-        firstSibling = firstSiblingByFather = firstSiblingByMother = firstSiblingBySoul = null;
+        firstSibling = firstSiblingBySoul = null;
     }
 
     public FamTree(String name) {
         this.person = new Person(name);
-        firstSibling = firstSiblingByFather = firstSiblingByMother = firstSiblingBySoul = null;
+        firstSibling = firstSiblingBySoul = null;
     }
 
     /**
      * Adds the mother of the person.
      */
     public void addMother(String motherName) {
-        person.motherSide = new FamTree(motherName);
+        person.setMother(motherName);
         // Recorrer a los hermanos del tipo indicado y añadirles la madre.
     }
 
@@ -36,43 +36,28 @@ public class FamTree {
      * Adds the father of the person.
      */
     public void addFather(String fatherName) {
-        person.fatherSide = new FamTree(fatherName);
+        person.setFather(fatherName);
         // Recorrer a los hermanos del tipo indicado y añadirles el padre.
     }
 
-    // Generic add sibling.
-    public void addS(String v) {
-        if (firstSibling == null) {
-            firstSibling = new Person(v);
-            person.siblingPrev = firstSibling;
-
-        } else {
-            Person temp = firstSibling;
-            firstSibling = new Person(v);
-            temp.prev = firstSibling;
-            firstSibling.next = temp;
-        }
-    }
-
     /**
-     * Adds a sibling of both mother and father.
+     * Adds a sibling of both mother and person.father.
      */
     public void addSibling(Person p) {
         // Recorrer a los hermanos del tipo indicado y añadirlo. Además, añadir a ese
         // hermano, padre y madre del actual.
         if (firstSibling == null) {
-            firstSibling = new Person(v);
+            firstSibling = new Person(p);
             person.siblingPrev = firstSibling;
-            firstSibling.father = father;
-            firstSibling.mother = mother;
-
+            firstSibling.father = person.father;
+            firstSibling.mother = person.mother;
         } else {
             Person temp = firstSibling;
-            firstSibling = new Person(v);
-            temp.prev = firstSibling;
-            firstSibling.next = temp;
-            firstSibling.father = father;
-            firstSibling.mother = mother;
+            firstSibling = new Person(p);
+            temp.siblingPrev = firstSibling;
+            firstSibling.siblingNext = temp;
+            firstSibling.father = person.father;
+            firstSibling.mother = person.mother;
         }
     }
 
@@ -82,19 +67,16 @@ public class FamTree {
     public void addSiblingByFather(Person p) {
         // Recorrer a los hermanos del tipo indicado y añadirlo. Además, añadir a ese
         // hermano, padre del actual.
-        if (firstSiblingByFather == null) {
-            firstSiblingByFather = new Person(v);
-            person.siblingPrev = firstSiblingByFather;
-            firstSiblingByFather.father = father;
-            firstSiblingByFather.mother = mother;
-
+        if (firstSibling == null) {
+            firstSibling = new Person(p);
+            person.siblingPrev = firstSibling;
+            firstSibling.father = person.father;
         } else {
             Person temp = firstSibling;
-            firstSibling = new Person(v);
-            temp.prev = firstSibling;
-            firstSiblingByFather.next = temp;
-            firstSiblingByFather.father = father;
-            firstSiblingByFather.mother = mother;
+            firstSibling = new Person(p);
+            temp.siblingPrev = firstSibling;
+            firstSibling.siblingNext = temp;
+            firstSibling.father = person.father;
         }
     }
 
@@ -104,6 +86,17 @@ public class FamTree {
     public void addSiblingByMother(Person p) {
         // Recorrer a los hermanos del tipo indicado y añadirlo. Además, añadir a ese
         // hermano, madre del actual.
+        if (firstSibling == null) {
+            firstSibling = new Person(p);
+            person.siblingPrev = firstSibling;
+            firstSibling.mother = person.mother;
+        } else {
+            Person temp = firstSibling;
+            firstSibling = new Person(p);
+            temp.siblingPrev = firstSibling;
+            firstSibling.siblingNext = temp;
+            firstSibling.mother = person.mother;
+        }
     }
 
     /**
@@ -111,31 +104,23 @@ public class FamTree {
      */
     public void addSiblingBySoul(Person p) {
         // Recorrer a los hermanos del tipo indicado y añadirlo.
-    }
-
-    /**
-     * Show family tree.
-     */
-    public String muestreArbol(String t, int p) {
-        String r = "";
-        if (motherSide != null) {
-            r += motherSide.muestreArbol(t, p + 1);
+        if (firstSiblingBySoul == null) {
+            firstSiblingBySoul = new Person(p);
+            person.siblingBySoulPrev = firstSiblingBySoul;
+        } else {
+            Person temp = firstSiblingBySoul;
+            firstSiblingBySoul = new Person(p);
+            temp.siblingBySoulPrev = firstSiblingBySoul;
+            firstSiblingBySoul.siblingBySoulNext = temp;
         }
-        for (int i = 0; i < p; i++)
-            r += "*" + t;
-        r += person.name + "\n";
-        if (fatherSide != null) {
-            r += fatherSide.muestreArbol(t, p + 1);
-        }
-        return r;
     }
 
     public static void main(String[] args) {
         FamTree ft = new FamTree("Alice");
         ft.addFather("Bob");
         ft.addMother("Claudia");
-        ft.fatherSide.addFather("Edsger");
-        ft.fatherSide.addMother("Fatima");
-        System.out.println(ft.muestreArbol("  ", 0));
+        ft.person.father.setFather("Edsger");
+        ft.person.father.setMother("Fatima");
+        System.out.println(ft.person.muestreArbol("  ", 0));
     }
 }
