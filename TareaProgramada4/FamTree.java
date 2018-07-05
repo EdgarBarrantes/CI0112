@@ -29,7 +29,7 @@ public class FamTree {
      */
     public void addMother(String motherName) {
         person.setMother(motherName);
-        // Recorrer a los hermanos del tipo indicado y añadirles la madre.
+        // Recorrer a los hermanos del tipo indicado y añadirles la madre?
     }
 
     /**
@@ -37,7 +37,7 @@ public class FamTree {
      */
     public void addFather(String fatherName) {
         person.setFather(fatherName);
-        // Recorrer a los hermanos del tipo indicado y añadirles el padre.
+        // Recorrer a los hermanos del tipo indicado y añadirles el padre?
     }
 
     /**
@@ -62,6 +62,14 @@ public class FamTree {
     }
 
     /**
+     * Añade hermanos por nombre.
+     */
+    public void addSibling(String name) {
+        Person p = new Person(name);
+        addSibling(p);
+    }
+
+    /**
      * Adds a sibling of both mother and father.
      */
     public void addSiblingByFather(Person p) {
@@ -78,6 +86,14 @@ public class FamTree {
             firstSibling.siblingNext = temp;
             firstSibling.father = person.father;
         }
+    }
+
+    /**
+     * Añade hermanos por nombre.
+     */
+    public void addSiblingByFather(String name) {
+        Person p = new Person(name);
+        addSiblingByFather(p);
     }
 
     /**
@@ -100,6 +116,14 @@ public class FamTree {
     }
 
     /**
+     * Añade hermanos por nombre.
+     */
+    public void addSiblingByMother(String name) {
+        Person p = new Person(name);
+        addSiblingByMother(p);
+    }
+
+    /**
      * Adds a sibling of both mother and father.
      */
     public void addSiblingBySoul(Person p) {
@@ -115,12 +139,116 @@ public class FamTree {
         }
     }
 
+    /**
+     * Añade hermanos por nombre.
+     */
+    public void addSiblingBySoul(String name) {
+        Person p = new Person(name);
+        addSiblingBySoul(p);
+    }
+
+    /**
+     * Devuelve un string con todos los hermanos de ambos padres.
+     */
+    public String getSiblings() {
+        String s = "Hermanos por parte de ambos padres:\n";
+        Person iter = person;
+        while (iter.siblingNext != null) {
+            iter = iter.siblingNext;
+            if (iter.father == person.father && iter.mother == person.mother) {
+                s += iter.name + " ";
+            }
+        }
+        iter = person;
+        while (iter.siblingPrev != null) {
+            iter = iter.siblingPrev;
+            if (iter.father == person.father && iter.mother == person.mother) {
+                s += iter.name + " ";
+            }
+        }
+        return s;
+    }
+
+    /**
+     * Devuelve un string con todos los hermanos de padre sólamente.
+     */
+    public String getSiblingsFather() {
+        String s = "Hermanos por parte del padre:\n";
+        Person iter = person;
+        while (iter.siblingNext != null) {
+            iter = iter.siblingNext;
+            if (iter.father == person.father && iter.mother != person.mother) {
+                s += iter.name + " ";
+            }
+        }
+        iter = person;
+        while (iter.siblingPrev != null) {
+            iter = iter.siblingPrev;
+            if (iter.father == person.father && iter.mother != person.mother) {
+                s += iter.name + " ";
+            }
+        }
+        return s;
+    }
+
+    /**
+     * Devuelve un string con todos los hermanos de madre sólamente.
+     */
+    public String getSiblingsMother() {
+        String s = "Hermanos por parte de la madre:\n";
+        Person iter = person;
+        while (iter.siblingNext != null) {
+            iter = iter.siblingNext;
+            if (iter.father != person.father && iter.mother == person.mother) {
+                s += iter.name + " ";
+            }
+        }
+        iter = person;
+        while (iter.siblingPrev != null) {
+            iter = iter.siblingPrev;
+            if (iter.father != person.father && iter.mother == person.mother) {
+                s += iter.name + " ";
+            }
+        }
+        return s;
+    }
+
+    /**
+     * Devuelve un string con todos los hermanos del alma.
+     */
+    public String getSiblingsSoul() {
+        String s = "Hermanos del alma:\n";
+        Person iter = person;
+        while (iter.siblingBySoulNext != null) {
+            iter = iter.siblingBySoulNext;
+            s += iter.name + " ";
+        }
+        iter = person;
+        while (iter.siblingBySoulPrev != null) {
+            iter = iter.siblingBySoulPrev;
+            s += iter.name + " ";
+        }
+        return s;
+    }
+
+    /**
+     * Devuelve un string con todos los hermanos.
+     */
+    public String getAllSiblings() {
+        return getSiblings() + "\n" + getSiblingsFather() + "\n" + getSiblingsMother() + "\n" + getSiblingsSoul();
+    }
+
     public static void main(String[] args) {
         FamTree ft = new FamTree("Alice");
         ft.addFather("Bob");
         ft.addMother("Claudia");
         ft.person.father.setFather("Edsger");
         ft.person.father.setMother("Fatima");
+        ft.addSibling("Donald");
+        ft.addSiblingByFather("Gerard");
+        ft.addSiblingByMother("Helga");
+        ft.addSiblingBySoul("Indira");
         System.out.println(ft.person.muestreArbol("  ", 0));
+        System.out.println(ft.getAllSiblings());
     }
 }
