@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.target=FamTree
+comment0.text=\n\ Write\ a\ description\ of\ class\ FamTree\ here.\n\n\ @author\ Edgar\ Barrantes\n\ @version\ 0.0.1\n
+comment1.params=person
+comment1.target=FamTree(FamTree.Person)
+comment1.text=\n\ Constructors\ for\ objects\ of\ class\ FamTree\n
+comment2.params=name
+comment2.target=FamTree(java.lang.String)
+comment3.params=motherName
+comment3.target=void\ addMother(java.lang.String)
+comment3.text=\n\ Adds\ the\ mother\ of\ the\ person.\n
+comment4.params=fatherName
+comment4.target=void\ addFather(java.lang.String)
+comment4.text=\n\ Adds\ the\ father\ of\ the\ person.\n
+comment5.params=t\ p
+comment5.target=java.lang.String\ muestreArbol(java.lang.String,\ int)
+comment5.text=\n\ Show\ family\ tree.\n
+comment6.params=args
+comment6.target=void\ main(java.lang.String[])
+numComments=7
