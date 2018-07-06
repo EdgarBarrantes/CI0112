@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=CommandLine
+comment0.text=\n\ Class\ intended\ for\ interaction\ with\ the\ user.\ Allows\ the\ reading\ and\n\ decomposition\ of\ commands,\ which\ control\ the\ flow\ of\ the\ program.\n\ \n\ @author\ (Gloriana\ Mora\ Villalta\ &\ Edgar\ Barrantes\ Brais.)\n\ @version\ (6/7/2018)\n
+comment1.params=
+comment1.target=CommandLine()
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ CommandLine.\n
+comment2.params=
+comment2.target=java.lang.String[]\ getCommand()
+comment2.text=\n\ Method\ to\ read\ and\ store\ in\ an\ array\ a\ command\ entered\ by\ the\ user,\ dividing\n\ it\ by\ regular\ expressions.\n\ \n\ @return\ An\ array\ of\ Strings,\ that\ contains\ a\ divided\ command,\ so\ that\ the\n\ \ \ \ \ \ \ \ \ first\ cell\ contains\ the\ action\ that\ the\ user\ wants\ to\ execute\ and\n\ \ \ \ \ \ \ \ \ then\ the\ necessary\ parameters\ to\ perform\ it.\n
+numComments=3

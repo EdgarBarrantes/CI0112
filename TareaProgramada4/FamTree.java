@@ -1,15 +1,63 @@
 
 /**
- * Write a description of class FamTree here.
- *
- * @author Edgar Barrantes
- * @version 0.0.1
+ * Class intended to act as a Family Tree. Includes internal class Person, to
+ * handle nodes in the family tree. This class will also act as a double list in
+ * order to handle the siblings of the persons.
+ * 
+ * @author (Gloriana Mora Villalta & Edgar Barrantes Brais.)
+ * @version (6/7/2018)
  */
 public class FamTree {
 
-    Person person;
-    Person firstSibling;
-    Person firstSiblingBySoul;
+    /**
+     * Class made in order to handle people in the family tree. Acts as a node of a
+     * tree and as one of a doubly linked list.
+     */
+    private class Person {
+        public String name;
+        public Person siblingPrev;
+        public Person siblingNext;
+        public Person siblingBySoulPrev;
+        public Person siblingBySoulNext;
+        public Person mother;
+        public Person father;
+        public Person directDescendants;
+
+        public Person(String name) {
+            this.name = name;
+            siblingNext = siblingPrev = siblingBySoulNext = siblingBySoulPrev = null;
+        }
+
+        /**
+         * Set both parents
+         */
+        public void setParents(String motherName, String fatherName) {
+            this.mother = new Person(motherName);
+            this.father = new Person(fatherName);
+        }
+
+        /**
+         * Show the ancestry of the person.
+         */
+        public String muestreArbol(String t, int p) {
+            String r = "";
+            if (mother != null) {
+                r += mother.muestreArbol(t, p + 1);
+            }
+            for (int i = 0; i < p; i++)
+                r += "*" + t;
+            r += name + "\n";
+            if (father != null) {
+                r += father.muestreArbol(t, p + 1);
+            }
+            return r;
+        }
+    }
+
+    // Atributes of the FamTree class.
+    private Person person;
+    private Person firstSibling;
+    private Person firstSiblingBySoul;
 
     /**
      * Constructors for objects of class FamTree
@@ -27,33 +75,32 @@ public class FamTree {
     /**
      * Adds the mother of the person.
      */
-    public void addMother(String motherName) {
-        person.setMother(motherName);
-        // Recorrer a los hermanos del tipo indicado y añadirles la madre?
+    public void setMother(String motherName) {
+        person.mother = new Person(motherName);
+        person.mother.directDescendants = person;
     }
 
     /**
      * Adds the father of the person.
      */
-    public void addFather(String fatherName) {
-        person.setFather(fatherName);
-        // Recorrer a los hermanos del tipo indicado y añadirles el padre?
+    public void setFather(String fatherName) {
+        person.father = new Person(fatherName);
+        person.father.directDescendants = person;
     }
 
     /**
-     * Adds a sibling of both mother and person.father.
+     * Adds a sibling of both mother and father.
      */
     public void addSibling(Person p) {
-        // Recorrer a los hermanos del tipo indicado y añadirlo. Además, añadir a ese
-        // hermano, padre y madre del actual.
         if (firstSibling == null) {
-            firstSibling = new Person(p);
+            firstSibling = p;
             person.siblingPrev = firstSibling;
+            firstSibling.siblingNext = person;
             firstSibling.father = person.father;
             firstSibling.mother = person.mother;
         } else {
             Person temp = firstSibling;
-            firstSibling = new Person(p);
+            firstSibling = p;
             temp.siblingPrev = firstSibling;
             firstSibling.siblingNext = temp;
             firstSibling.father = person.father;
@@ -62,7 +109,7 @@ public class FamTree {
     }
 
     /**
-     * Añade hermanos por nombre.
+     * Adds siblings by name.
      */
     public void addSibling(String name) {
         Person p = new Person(name);
@@ -73,15 +120,14 @@ public class FamTree {
      * Adds a sibling of both mother and father.
      */
     public void addSiblingByFather(Person p) {
-        // Recorrer a los hermanos del tipo indicado y añadirlo. Además, añadir a ese
-        // hermano, padre del actual.
         if (firstSibling == null) {
-            firstSibling = new Person(p);
+            firstSibling = p;
+            firstSibling.siblingNext = person;
             person.siblingPrev = firstSibling;
             firstSibling.father = person.father;
         } else {
             Person temp = firstSibling;
-            firstSibling = new Person(p);
+            firstSibling = p;
             temp.siblingPrev = firstSibling;
             firstSibling.siblingNext = temp;
             firstSibling.father = person.father;
@@ -89,7 +135,7 @@ public class FamTree {
     }
 
     /**
-     * Añade hermanos por nombre.
+     * Adds siblings by name.
      */
     public void addSiblingByFather(String name) {
         Person p = new Person(name);
@@ -100,15 +146,13 @@ public class FamTree {
      * Adds a sibling of both mother and father.
      */
     public void addSiblingByMother(Person p) {
-        // Recorrer a los hermanos del tipo indicado y añadirlo. Además, añadir a ese
-        // hermano, madre del actual.
         if (firstSibling == null) {
-            firstSibling = new Person(p);
+            firstSibling = p;
             person.siblingPrev = firstSibling;
             firstSibling.mother = person.mother;
         } else {
             Person temp = firstSibling;
-            firstSibling = new Person(p);
+            firstSibling = p;
             temp.siblingPrev = firstSibling;
             firstSibling.siblingNext = temp;
             firstSibling.mother = person.mother;
@@ -116,7 +160,7 @@ public class FamTree {
     }
 
     /**
-     * Añade hermanos por nombre.
+     * Adds siblings by name.
      */
     public void addSiblingByMother(String name) {
         Person p = new Person(name);
@@ -127,20 +171,19 @@ public class FamTree {
      * Adds a sibling of both mother and father.
      */
     public void addSiblingBySoul(Person p) {
-        // Recorrer a los hermanos del tipo indicado y añadirlo.
         if (firstSiblingBySoul == null) {
-            firstSiblingBySoul = new Person(p);
+            firstSiblingBySoul = p;
             person.siblingBySoulPrev = firstSiblingBySoul;
         } else {
             Person temp = firstSiblingBySoul;
-            firstSiblingBySoul = new Person(p);
+            firstSiblingBySoul = p;
             temp.siblingBySoulPrev = firstSiblingBySoul;
             firstSiblingBySoul.siblingBySoulNext = temp;
         }
     }
 
     /**
-     * Añade hermanos por nombre.
+     * Adds siblings by name.
      */
     public void addSiblingBySoul(String name) {
         Person p = new Person(name);
@@ -148,23 +191,7 @@ public class FamTree {
     }
 
     /**
-     * Añade hermanos a la lista de hermanos default.
-     */
-    public void addSiblingGeneric(Person p) {
-        // Recorrer a los hermanos del tipo indicado y añadirlo.
-        if (firstSibling == null) {
-            firstSibling = new Person(p);
-            person.siblingPrev = firstSibling;
-        } else {
-            Person temp = firstSibling;
-            firstSibling = new Person(p);
-            temp.siblingPrev = firstSibling;
-            firstSibling.siblingNext = temp;
-        }
-    }
-
-    /**
-     * Devuelve un string con todos los hermanos de ambos padres.
+     * Returns a string with the siblings from both parents.
      */
     public String getSiblings() {
         String t = "Hermanos por parte de ambos padres:\n";
@@ -192,7 +219,8 @@ public class FamTree {
     }
 
     /**
-     * Devuelve un string con todos los hermanos de padre sólamente.
+     * Returns a string with the sibligs with whom the person shares father but not
+     * mother.
      */
     public String getSiblingsFather() {
         String t = "Hermanos por parte del padre:\n";
@@ -220,7 +248,8 @@ public class FamTree {
     }
 
     /**
-     * Devuelve un string con todos los hermanos de madre sólamente.
+     * Returns a string with the sibligs with whom the person shares mother but not
+     * father.
      */
     public String getSiblingsMother() {
         String t = "Hermanos por parte de la madre:\n";
@@ -248,7 +277,7 @@ public class FamTree {
     }
 
     /**
-     * Devuelve un string con todos los hermanos del alma.
+     * Returns a String with all the soul siblings.
      */
     public String getSiblingsSoul() {
         String t = "Hermanos del alma:\n";
@@ -272,18 +301,18 @@ public class FamTree {
     }
 
     /**
-     * Devuelve un string con todos los hermanos.
+     * Returns a string with all the siblings.
      */
     public String getAllSiblings() {
         return getSiblings() + "\n" + getSiblingsFather() + "\n" + getSiblingsMother() + "\n" + getSiblingsSoul();
     }
 
     /**
-     * Cambia la persona de la cual se quiere usar el arbol.
+     * Changes the main person in the tree to a sibling.
      */
     public void changePersonToSibling(String name) {
         Person iter = firstSiblingBySoul;
-        Person tempPerson = new Person();
+        Person tempPerson = null;
         Person temp;
         while (iter.siblingBySoulNext != null) {
             iter = iter.siblingBySoulNext;
@@ -292,26 +321,84 @@ public class FamTree {
                 break;
             }
         }
-        if (tempPerson.name == name) {
+        if (tempPerson == null) {
+            iter = firstSibling;
+            while (iter.siblingNext != null) {
+                iter = iter.siblingNext;
+                if (iter.name == name) {
+                    tempPerson = iter;
+                    break;
+                }
+            }
+            if (tempPerson == null) {
+                System.out.println("No hay ningún hermano con ese nombre.");
+            } else {
+                temp = person;
+                person = tempPerson;
+            }
+        } else {
             temp = person;
             person = tempPerson;
-            addSiblingBySoul(temp);
+        }
+    }
+
+    /**
+     * Changes the main person to an ascestor.
+     */
+    public void changePersonToAncestor(String name) {
+        Person newRoot = searchPersonInTree(name, person);
+        if (newRoot != null) {
+            person = newRoot;
         } else {
-            if (tempPerson.name != name) {
-                iter = firstSibling;
-                while (iter.siblingNext != null) {
-                    iter = iter.siblingNext;
+            System.out.println("Esa persona no existe en los antepasados.");
+        }
+    }
+
+    /**
+     * Searches for a person in a family tree by name.
+     */
+    public Person searchPersonInTree(String name, Person person) {
+        if (person != null) {
+            if (person.name.equals(name)) {
+                return person;
+            } else {
+                Person foundPerson = searchPersonInTree(name, person.mother);
+                if (foundPerson == null) {
+                    foundPerson = searchPersonInTree(name, person.father);
+                }
+                return foundPerson;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Change person to descendant.
+     */
+    public void changePersonToDescendant(String name) {
+        Person iter = person.directDescendants;
+        if (iter.name == name) {
+            person = iter;
+        } else {
+            while (iter.siblingNext != null) {
+                iter = iter.siblingNext;
+                if (iter.name == name) {
+                    person = iter;
+                    break;
+                }
+            }
+            if (person != iter) {
+                iter = person.directDescendants;
+                while (iter.siblingPrev != null) {
+                    iter = iter.siblingPrev;
                     if (iter.name == name) {
-                        tempPerson = iter;
+                        person = iter;
                         break;
                     }
                 }
-                if (tempPerson.name != name) {
-                    System.out.println("No hay ningún hermano con ese nombre.");
-                } else {
-                    temp = person;
-                    person = tempPerson;
-                    addSiblingGeneric(temp);
+                if (iter.name != name) {
+                    System.out.println("No hay descendientes con ese nombre");
                 }
             }
         }
@@ -319,30 +406,21 @@ public class FamTree {
 
     public static void main(String[] args) {
         FamTree ft = new FamTree("Alice");
-        ft.addFather("Bob");
-        ft.addMother("Claudia");
-        ft.person.father.setFather("Edsger");
-        ft.person.father.setMother("Fatima");
+        ft.setFather("Bob");
+        ft.setMother("Claudia");
         ft.addSibling("Donald");
         ft.addSiblingByFather("Gerard");
         ft.addSiblingByFather("Jovanka");
         ft.addSiblingByMother("Helga");
         ft.addSiblingBySoul("Indira");
-        // System.out.println(ft.person.muestreArbol(" ", 0));
-        // ft.changePersonToSibling("Gerard");
-        // ft.changePersonToSibling("Alice");
+        ft.changePersonToSibling("Gerard");
+        ft.changePersonToSibling("Alice");
+        ft.changePersonToAncestor("Bob");
+        ft.setFather("Edsger");
+        ft.setMother("Fatima");
+        ft.changePersonToDescendant("Gerard");
+        ft.setMother("Wilhemina");
         System.out.println(ft.person.muestreArbol("  ", 0));
         System.out.println(ft.getAllSiblings());
     }
 }
-
-/**
- * Hay que corregir lo de que no aparezca la persona original como hermano de la
- * persona a la que se cambio.
- * 
- * Hay que arreglar este problema, está en un while infinito, fijo tiene que ver
- * con addSiblingGeneric o con la forma de cambiar hermano.
- * 
- * Y añadirle algo que diga que si no hay hermanos no se devuelva ningún string.
- * Done.
- */
