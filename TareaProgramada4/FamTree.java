@@ -148,10 +148,27 @@ public class FamTree {
     }
 
     /**
+     * Añade hermanos a la lista de hermanos default.
+     */
+    public void addSiblingGeneric(Person p) {
+        // Recorrer a los hermanos del tipo indicado y añadirlo.
+        if (firstSibling == null) {
+            firstSibling = new Person(p);
+            person.siblingPrev = firstSibling;
+        } else {
+            Person temp = firstSibling;
+            firstSibling = new Person(p);
+            temp.siblingPrev = firstSibling;
+            firstSibling.siblingNext = temp;
+        }
+    }
+
+    /**
      * Devuelve un string con todos los hermanos de ambos padres.
      */
     public String getSiblings() {
-        String s = "Hermanos por parte de ambos padres:\n";
+        String t = "Hermanos por parte de ambos padres:\n";
+        String s = "";
         Person iter = person;
         while (iter.siblingNext != null) {
             iter = iter.siblingNext;
@@ -166,14 +183,20 @@ public class FamTree {
                 s += iter.name + " ";
             }
         }
-        return s;
+        if (s == "") {
+            t = "Esta persona no tiene hermanos por parte de ambos padres.";
+        } else {
+            t += s;
+        }
+        return t;
     }
 
     /**
      * Devuelve un string con todos los hermanos de padre sólamente.
      */
     public String getSiblingsFather() {
-        String s = "Hermanos por parte del padre:\n";
+        String t = "Hermanos por parte del padre:\n";
+        String s = "";
         Person iter = person;
         while (iter.siblingNext != null) {
             iter = iter.siblingNext;
@@ -188,14 +211,20 @@ public class FamTree {
                 s += iter.name + " ";
             }
         }
-        return s;
+        if (s == "") {
+            t = "Esta persona no tiene hermanos por parte del padre.";
+        } else {
+            t += s;
+        }
+        return t;
     }
 
     /**
      * Devuelve un string con todos los hermanos de madre sólamente.
      */
     public String getSiblingsMother() {
-        String s = "Hermanos por parte de la madre:\n";
+        String t = "Hermanos por parte de la madre:\n";
+        String s = "";
         Person iter = person;
         while (iter.siblingNext != null) {
             iter = iter.siblingNext;
@@ -210,14 +239,20 @@ public class FamTree {
                 s += iter.name + " ";
             }
         }
-        return s;
+        if (s == "") {
+            t = "Esta persona no tiene hermanos por parte de la madre.";
+        } else {
+            t += s;
+        }
+        return t;
     }
 
     /**
      * Devuelve un string con todos los hermanos del alma.
      */
     public String getSiblingsSoul() {
-        String s = "Hermanos del alma:\n";
+        String t = "Hermanos del alma:\n";
+        String s = "";
         Person iter = person;
         while (iter.siblingBySoulNext != null) {
             iter = iter.siblingBySoulNext;
@@ -228,7 +263,12 @@ public class FamTree {
             iter = iter.siblingBySoulPrev;
             s += iter.name + " ";
         }
-        return s;
+        if (s == "") {
+            t = "Esta persona no tiene hermanos del alma.";
+        } else {
+            t += s;
+        }
+        return t;
     }
 
     /**
@@ -236,6 +276,45 @@ public class FamTree {
      */
     public String getAllSiblings() {
         return getSiblings() + "\n" + getSiblingsFather() + "\n" + getSiblingsMother() + "\n" + getSiblingsSoul();
+    }
+
+    /**
+     * Cambia la persona de la cual se quiere usar el arbol.
+     */
+    public void changePersonToSibling(String name) {
+        Person iter = firstSiblingBySoul;
+        Person tempPerson = new Person();
+        Person temp;
+        while (iter.siblingBySoulNext != null) {
+            iter = iter.siblingBySoulNext;
+            if (iter.name == name) {
+                tempPerson = iter;
+                break;
+            }
+        }
+        if (tempPerson.name == name) {
+            temp = person;
+            person = tempPerson;
+            addSiblingBySoul(temp);
+        } else {
+            if (tempPerson.name != name) {
+                iter = firstSibling;
+                while (iter.siblingNext != null) {
+                    iter = iter.siblingNext;
+                    if (iter.name == name) {
+                        tempPerson = iter;
+                        break;
+                    }
+                }
+                if (tempPerson.name != name) {
+                    System.out.println("No hay ningún hermano con ese nombre.");
+                } else {
+                    temp = person;
+                    person = tempPerson;
+                    addSiblingGeneric(temp);
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -246,9 +325,24 @@ public class FamTree {
         ft.person.father.setMother("Fatima");
         ft.addSibling("Donald");
         ft.addSiblingByFather("Gerard");
+        ft.addSiblingByFather("Jovanka");
         ft.addSiblingByMother("Helga");
         ft.addSiblingBySoul("Indira");
+        // System.out.println(ft.person.muestreArbol(" ", 0));
+        // ft.changePersonToSibling("Gerard");
+        // ft.changePersonToSibling("Alice");
         System.out.println(ft.person.muestreArbol("  ", 0));
         System.out.println(ft.getAllSiblings());
     }
 }
+
+/**
+ * Hay que corregir lo de que no aparezca la persona original como hermano de la
+ * persona a la que se cambio.
+ * 
+ * Hay que arreglar este problema, está en un while infinito, fijo tiene que ver
+ * con addSiblingGeneric o con la forma de cambiar hermano.
+ * 
+ * Y añadirle algo que diga que si no hay hermanos no se devuelva ningún string.
+ * Done.
+ */

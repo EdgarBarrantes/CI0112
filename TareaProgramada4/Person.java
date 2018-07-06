@@ -6,6 +6,12 @@ public class Person {
   Person siblingBySoulNext;
   Person mother;
   Person father;
+  Person directDescendants;
+
+  public Person() {
+    this.name = "";
+    siblingNext = siblingPrev = siblingBySoulNext = siblingBySoulPrev = null;
+  }
 
   public Person(String name) {
     this.name = name;
