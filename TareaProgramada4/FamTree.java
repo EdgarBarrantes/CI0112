@@ -8,7 +8,6 @@
  * @version (6/7/2018)
  */
 public class FamTree {
-
     /**
      * Class made in order to handle people in the family tree. Acts as a node of a
      * tree and as one of a doubly linked list.
@@ -308,6 +307,30 @@ public class FamTree {
     }
 
     /**
+     * Returns a string with all the direct descendants.
+     */
+    public String getDescendants() {
+        String t = "Descendientes directos:\n";
+        String s = "";
+        Person iter = person.directDescendants;
+        while (iter.siblingNext != null) {
+            iter = iter.siblingNext;
+            s += iter.name + " ";
+        }
+        iter = person.directDescendants;
+        while (iter.siblingPrev != null) {
+            s += iter.name + " ";
+            iter = iter.siblingPrev;
+        }
+        if (s == "") {
+            t = "Esta persona no tiene descendientes.";
+        } else {
+            t += s;
+        }
+        return t;
+    }
+
+    /**
      * Changes the main person in the tree to a sibling.
      */
     public void changePersonToSibling(String name) {
@@ -317,7 +340,7 @@ public class FamTree {
         while (iter.siblingBySoulNext != null) {
             iter = iter.siblingBySoulNext;
             if (iter.name == name) {
-                tempPerson = iter;
+                tempPerson = iter;  
                 break;
             }
         }
@@ -350,7 +373,7 @@ public class FamTree {
         if (newRoot != null) {
             person = newRoot;
         } else {
-            System.out.println("Esa persona no existe en los antepasados.");
+            System.out.println("Ningún antepasado tiene ese nombre.");
         }
     }
 
@@ -420,7 +443,9 @@ public class FamTree {
         ft.setMother("Fatima");
         ft.changePersonToDescendant("Gerard");
         ft.setMother("Wilhemina");
+        ft.changePersonToAncestor("Bob");
         System.out.println(ft.person.muestreArbol("  ", 0));
         System.out.println(ft.getAllSiblings());
+        System.out.println(ft.getDescendants());
     }
 }
