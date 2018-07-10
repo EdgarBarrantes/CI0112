@@ -310,7 +310,7 @@ public class FamTree {
      * Returns a string with all the direct descendants.
      */
     public String getDescendants() {
-        String t = "Descendientes directos:\n";
+        String t = "Direct descendants:\n";
         String s = "";
         Person iter = person.directDescendants;
         while (iter.siblingNext != null) {
@@ -323,7 +323,7 @@ public class FamTree {
             iter = iter.siblingPrev;
         }
         if (s == "") {
-            t = "Esta persona no tiene descendientes.";
+            t = "This person has no descendants.";
         } else {
             t += s;
         }
